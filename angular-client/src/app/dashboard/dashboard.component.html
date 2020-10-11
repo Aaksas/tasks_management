@@ -1,0 +1,17 @@
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
+    <app-left-sidebar></app-left-sidebar>
+    <main class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <h2>  Angular Sidebar Template </h2>
+                    <hr>
+                    <p>This is a responsive sidebar template with dropdown menu built with angular 7 and bootstrap 4.</p>
+                    <hr>
+                    <a class="btn btn-outline-secondary mr-1 mb-1" (click)="toggleSidebar() ">Toggle Sidebar</a>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : !getSideBarState()}"></div>
+    </main>
+  </div>

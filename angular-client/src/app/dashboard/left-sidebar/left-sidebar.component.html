@@ -1,0 +1,30 @@
+<nav id="sidebar" class="sidebar" style="margin-top: 56px;" *ngIf='!getSideBarState()'>
+    <div class="sidebar-content">
+        <perfect-scrollbar>
+            <div class="sidebar-search">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu" [(ngModel)]='task.name' placeholder="Name">
+                    </div>
+
+                </div>
+                <button type="button" class="btn btn-dark" (click)='addTask()' style="
+            margin-left: 160px;
+            margin-top: 5px;margin-bottom: 8px;">Add Task</button>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li *ngFor="let task of tasks" [ngClass]="{'header-task':task.type === 'header'}">
+                        <div>
+                            <a>
+                                <span>{{task.name}} </span>
+                                <i class="fa fa-trash-o" (click)='open()' style="display: block;  float: right; "></i>
+                            </a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</nav>
