@@ -13,5 +13,7 @@ export class DeleteTaskComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(){}
+  save = () => {
+    this.activeModal.close("ok");
+  }
 }
