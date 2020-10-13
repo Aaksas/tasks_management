@@ -21,7 +21,6 @@ router.post("/createTask", passport.authenticate("jwt", {session: false}), (req,
 
 router.get("/findtasks", passport.authenticate("jwt", {session: false}), (req, res, next)=>{
     Task.getTasks((err , data)=>{
-        console.log('data',data);
         res.json(data)
     })
 });
@@ -31,6 +30,10 @@ router.delete("/delete/:id" , passport.authenticate("jwt", {session: false}), (r
         res.json(data)
     })
 });
-
+router.put("/update/:id" , passport.authenticate("jwt", {session: false}), (req, res, next)=>{
+    Task.updateTask( req.params.id ,req.body, (err , data)=>{
+        res.json(data)
+    })
+});
 
 module.exports = router;

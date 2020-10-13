@@ -38,4 +38,15 @@ export class TaskService {
     return this.http.delete("http://localhost:3000/tasks/delete/"+id , {headers: headers});
   }
 
+  update(id :any , data :any):Observable<any>{
+    this.authService.loadToken();
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': this.authService.authToken
+    });
+    console.log('data',data);
+    
+    return this.http.put("http://localhost:3000/tasks/update/"+id ,data, {headers: headers});
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SidebarService } from 'src/app/_services/sidebar.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +25,7 @@ export class LeftSidebarComponent implements OnInit {
     private modalService: NgbModal) {
     this.tasks = sidebarservice.getMenuList();
    }
+   @Output() messageEvent = new EventEmitter<string>();
 
   ngOnInit() {
     this.getSideBarState() 
@@ -40,10 +41,13 @@ export class LeftSidebarComponent implements OnInit {
       this.taskService.createTask(this.task).subscribe((res)=>{
         this.getTasks()
         this.task={}
-      })
-      
+      })     
     }
-    
+  }
+
+  send(task :any){
+    console.log('task',task);
+    this.messageEvent.emit(task)
   }
 
   getTasks(){
