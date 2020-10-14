@@ -1,0 +1,48 @@
+<nav id="sidebar" class="sidebar" style="margin-top: 56px; position: absolute; margin-left: 1259px;"
+    *ngIf='getRightSideBarState()'>
+    <div class="sidebar-content">
+        <perfect-scrollbar>
+            <div class="sidebar-search">
+                <div>
+                    <span style="color: white !important;"> Short Description </span>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu description" name='short'
+                            [(ngModel)]="item.shortDesc" readonly>
+                    </div>
+                    <span style="color: white !important;"> Long Description </span>
+
+                    <div class="input-group">
+                        <textarea class="form-control search-menu description" type='text' name='long'
+                            [(ngModel)]='item.longDesc' cols="50" rows="4" readonly></textarea>
+                    </div>
+                    <span style="color: white !important;"> Due Description </span>
+                    <div class="input-group">
+                        <!-- <input type="date" class="form-control search-menu"> -->
+                        <input class="form-control search-menu description" type="date" name='duedate'
+                            [(ngModel)]='item.dueDate' readonly />
+                    </div>
+
+                    <span style="color: white !important;"> Create At </span>
+                    <div class="input-group">
+                        <!-- <input type="date" class="form-control search-menu"> -->
+                        <span class="form-control search-menu description">{{item.createAt| date:'dd-MM-yyyy'}}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <div>
+                            <a>
+                                <i class="fa fa-trash-o" (click)=deleteTask(item) style="display: block;  float: right; "></i>
+                            </a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</nav>

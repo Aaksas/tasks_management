@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -9,9 +9,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class DeleteTaskComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal) { }
-
+  @Input()  task :boolean  = false
   ngOnInit(): void {
+
   }
 
-  save(){}
+  save = () => {
+    this.activeModal.close("ok");
+  }
 }

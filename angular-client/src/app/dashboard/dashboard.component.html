@@ -1,17 +1,106 @@
-<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
-    <app-left-sidebar></app-left-sidebar>
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState() ,'toggled2' : getRightSideBarState()}">
+    <app-left-sidebar (messageEvent)="receiveMessage($event)"></app-left-sidebar>
+    <app-right-sidebar (messageEvent)="receiveItem($event)" [item]="item" ></app-right-sidebar>
+
     <main class="page-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="form-group col-md-12">
-                    <h2>  Angular Sidebar Template </h2>
+                <div class="form-group col-md-9" *ngIf='receivedTask'>
+                    <h2> Add Task to {{receivedTask.name}}
+                        <i class="fa fa-plus" aria-hidden="true" (click)='addTask()'
+                            style="display: block;  float: right; margin-top: 8px; "></i>
+                    </h2>
+
+                    
+                    <div *ngFor='let task of receivedTask.items , let i=index'>
+                        <hr>
+                        <div class="row ">
+                            <div class="form-group col-md-3">
+                                <input type='text' name='short{{i}}' [(ngModel)]='task.shortDesc'
+                                    placeholder="Short Description" required />
+                                <div *ngIf="requiredDesc[i]">
+                                    <span class="lbl-error">This field is required</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <textarea type='text' name='long{{i}}' [(ngModel)]='task.longDesc'
+                                    placeholder="Long Description" cols="40" rows="4"></textarea>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <input type="date" name='date{{i}}' placeholder="Due date" [(ngModel)]='task.dueDate'
+                                    required />
+                                <div *ngIf="requiredDate[i]">
+                                    <span class="lbl-error">This field is required</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-1" style="margin-left: 40px;">
+                                <i class="fa fa-trash-o" (click)="deleteTask(i)"></i>
+                            </div>
+
+                        </div>
                     <hr>
-                    <p>This is a responsive sidebar template with dropdown menu built with angular 7 and bootstrap 4.</p>
+
+                    </div>
+                    <a *ngIf='receivedTask.items && receivedTask.items.length > 0'
+                        class="btn btn-outline-secondary mr-1 mb-1" (click)="save() ">Save</a>
                     <hr>
-                    <a class="btn btn-outline-secondary mr-1 mb-1" (click)="toggleSidebar() ">Toggle Sidebar</a>
+                    <div class="row">
+                        <div class="col-md-6 accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link " type="button" data-toggle="collapse"
+                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            The completed tasks
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body" *ngFor='let task of completed'>
+                                            <span style="cursor: pointer;" (click)='toggleRightSidebar(task)' >{{task.shortDesc}}</span>
+                                            <input type="checkbox" class="float-right ms-rgl-checkbox"
+                                                (click)="checkItem(task)" [checked]="task.done">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 accordion" id="accordionExample1">
+                            <div class="card">
+                                <div class="card-header" id="headingOne1">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link " type="button" data-toggle="collapse"
+                                            data-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                                            The tasks to be performed
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne1" class="collapse" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample1">
+                                    <div class="card-body" *ngFor='let task of notCompleted '>
+                                            <span style="cursor: pointer;" (click)='toggleRightSidebar(task )'>{{task.shortDesc}}</span>
+                                            <input type="checkbox" class="float-right ms-rgl-checkbox"
+                                                (click)="checkItem(task)" [checked]="task.done">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a class="btn btn-outline-secondary mr-1 mb-1" (click)="toggleSidebar() ">Toggle Sidebar</a> -->
+                </div>
+                <div class="form-group col-md-9" *ngIf='!receivedTask'>
+                    <h2> Please select list </h2>
+                    <!-- <hr>
+                    <hr> -->
                 </div>
             </div>
+            <a class="btn btn-outline-secondary" (click)="toggleSidebar() ">
+                Toggle Sidebar
+              </a>
+              
         </div>
-        <div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : !getSideBarState()}"></div>
+        <!-- <div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : !getSideBarState()}"></div> -->
     </main>
-  </div>
+</div>

@@ -26,6 +26,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { LeftSidebarComponent } from './dashboard/left-sidebar/left-sidebar.component';
 import { DeleteTaskComponent } from './dashboard/delete-task/delete-task.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { RightSidebarComponent } from './dashboard/right-sidebar/right-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     LeftSidebarComponent,
     DeleteTaskComponent,
+    RightSidebarComponent,
   ],
   imports: [
     BrowserModule,
