@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarService {
   toggled = false;
+  toggled2 = false;
   menus = [
   ];
   constructor() { }
@@ -13,14 +14,23 @@ export class SidebarService {
     this.toggled = ! this.toggled;
   }
 
+  toggle2() {
+    this.toggled = ! this.toggled;
+  }
+
   getSidebarState() {
     return this.toggled;
   }
 
+  getRightSideBarState() {
+    return this.toggled2;
+  }
+
   setSidebarState(state: boolean) {
-    console.log('state',state);
-    
     this.toggled = state;
+  }
+  setSidebarState2(state: boolean) {
+    this.toggled2 = state;
   }
 
   getMenuList() {

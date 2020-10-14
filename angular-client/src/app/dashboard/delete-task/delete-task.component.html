@@ -3,8 +3,10 @@
 </div>
 
 <div class="modal-body">
-    <p> Task is about to be deleted.
+    <p *ngIf='!task'> Task is about to be deleted.
         All related data will be removed .
+        Do you confirm ?</p>
+    <p *ngIf='task'> Task is about to be deleted.
         Do you confirm ?</p>
 </div>
 <div class="modal-footer">

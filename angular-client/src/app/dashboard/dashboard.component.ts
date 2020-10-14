@@ -12,13 +12,13 @@ export class DashboardComponent implements OnInit {
   constructor(public sidebarservice: SidebarService,
     public taskService: TaskService
   ) { }
-
+  item: any
   tasks: any = []
   requiredDesc: boolean[] = [];
   requiredDate: boolean[] = [];
   completed: any = []
   notCompleted: any = []
-
+  myDate = new Date();
   ngOnInit() {
   }
 
@@ -30,10 +30,25 @@ export class DashboardComponent implements OnInit {
     return this.sidebarservice.getSidebarState();
   }
 
-  hideSidebar() {
-    this.sidebarservice.setSidebarState(true);
+  toggleRightSidebar(item: any) {
+    this.item = item
+    this.sidebarservice.setSidebarState2(!this.sidebarservice.getRightSideBarState());
   }
 
+  getRightSideBarState() {
+    return this.sidebarservice.getSidebarState();
+  }
+
+  receiveItem($event) {
+    
+    this.receivedTask.tasks = this.receivedTask.tasks.filter(a => a.shortDesc != $event.shortDesc)
+    this.taskService.update(this.receivedTask._id, this.receivedTask).subscribe((res) => {
+      this.sidebarservice.setSidebarState2(!this.sidebarservice.getRightSideBarState());
+      this.completed = this.receivedTask.tasks.filter(a => a.done)
+      this.notCompleted = this.receivedTask.tasks.filter(a => !a.done)
+    })
+
+  }
   receiveMessage($event) {
     this.receivedTask = $event
     this.completed = this.receivedTask.tasks.filter(a => a.done)
@@ -44,7 +59,7 @@ export class DashboardComponent implements OnInit {
     if (!this.receivedTask.items) {
       this.receivedTask.items = []
     }
-    this.receivedTask.items.push({ done: true })
+    this.receivedTask.items.push({ done: true, createAt: this.myDate })
   }
 
   deleteTask(index: number) {
@@ -54,10 +69,10 @@ export class DashboardComponent implements OnInit {
   checkItem(item) {
     item.done = !item.done
     this.taskService.update(this.receivedTask._id, this.receivedTask).subscribe((res) => {
-      console.log('res', res);
+      this.completed = this.receivedTask.tasks.filter(a => a.done)
+      this.notCompleted = this.receivedTask.tasks.filter(a => !a.done)
     })
-    this.completed = this.receivedTask.tasks.filter(a => a.done)
-    this.notCompleted = this.receivedTask.tasks.filter(a => !a.done)
+
   }
 
   save() {
